@@ -1,2 +1,3 @@
 # vuja_trail
-Game
+
+By: Vuk Arula (2023)
