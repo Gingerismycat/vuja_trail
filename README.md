@@ -12,7 +12,7 @@ By: Vuk Arula (2023)
     conda activate vuja-trail
     ```
 
-To run/play the VUJA-TRAIL call 
-```console
-python main.py
-```
+3. To run/play the VUJA-TRAIL call 
+    ```console
+    python main.py
+    ```
