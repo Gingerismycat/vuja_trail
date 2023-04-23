@@ -5,7 +5,7 @@ By: Vuk Arula (2023)
 ## Installation Guide
 1. Create a Conda environment
     ```console
-    conda create --name vuja-trail
+    conda create --name vuja-trail python=3.10
     ```
 2. Activate the Environment
     ```console
