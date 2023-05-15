@@ -1,5 +1,3 @@
-
-#%% 
 class Player():
     def __init__(self) -> None:
         # starting player stats
@@ -18,7 +16,7 @@ class Wagon():
     
     def check_status(self): 
         return self.__dict__
-
+    
 
 class Carpenter(): 
     def __init__(self) -> None:
@@ -54,4 +52,3 @@ if __name__ == '__main__':
         
 
 
-# %%

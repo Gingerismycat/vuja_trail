@@ -11,20 +11,27 @@ class Inventory():
         "gun" :1,
         "ammo":10,
         "money":100,
-        "entertainmentitem": 1
+        "entertainment item": 1
         }
 
     def show(self): 
         return self.inventory
 
-    def add_new_item(self, item, value): 
-        self.inventory[item] = value
+    def add_new_item(self, item_name:str, value): 
+        self.inventory[item_name] = value
     
-    def update_add_item(self, item, value): 
-        self.inventory[item] = self.inventory[item] + value
+    def update_item(self, item_name:str, value):
+        """Update inventory item value.""" 
+        self.inventory[item_name] = value
+    
+    def update_add_item(self, item_name:str, value): 
+        self.inventory[item_name] = self.inventory[item_name] + value
 
-    def update_sub_item(self, item, value): 
-        self.inventory[item] = self.inventory[item] - value
+    def update_sub_item(self, item_name:str, value): 
+        self.inventory[item_name] = self.inventory[item_name] - value
+
+    def as_dict(self) -> dict: 
+        return self.inventory
 
 class WagonTeam(): 
 
@@ -43,22 +50,45 @@ class TrailEvents():
 
         event_prob = self._get_probablity()
 
-        if event_prob <= 50: 
+        if event_prob <= 10: 
             self._get_berries() 
+        elif 10 < event_prob <= 15: 
+            self._wagon_break()
         else: 
-            print('no events triggered.')
+            print('no events triggered.\n')
 
     def _get_probablity(self): 
+        """Get a random number between 0 and 100 - representing a probablility."""
         event_prob = random.randint(0,100)
         return event_prob
     
     def _get_berries(self): 
-        # fine a random amount of berries
+        """Find a random amount of berries."""
         berries = random.randint(1, 20)
         print(f'\nYou found {berries} berries')
         self.wagon_team.inventory.update_add_item('food', berries)
         print(f"\tInventory: \n\t{self.wagon_team.inventory.show()}\n")
-
+    
+    def _wagon_break(self):
+        """Trigger a wagon breaking event. Deducts X hitpoints from wagon health."""
+        current_wagon_health = self.wagon_team.wagon.wagon_health
+        damage = random.randint(5,20)
+        new_wagon_health = current_wagon_health - damage
+        self.wagon_team.wagon.wagon_health = current_wagon_health - damage
+        if self.wagon_team.wagon.wagon_health < 1:
+            print("Your wagon broke down! Your hopes of reaching the end of the trail are over!")
+        else:
+            print(f"\nYour wagon lost {damage} health! It is now at {new_wagon_health} health!")
+    def _lose_item(self):
+        special_lose_items = ["oxen"]
+        
+        current_invt = self.wagon_team.inventory.as_dict()
+        item_name = random.choice(list(current_invt))
+        current_value = current_invt[item_name]
+        if item_name is "oxen": 
+            ... 
+        new_value = current_value - 1
+        self.wagon_team.inventory.update_item(item_name, new_value)
 class GameProgress(): 
     def __init__(self, wagon_team:WagonTeam) -> None:
         self.wagon_team = wagon_team
@@ -73,7 +103,7 @@ class GameProgress():
         self.game_condition = status
 
     def query_next_move(self): 
-        msg = "What would you like to do?\n1) Walk\n2) Rest\n3) Check Status\n4) Exit Game\n"
+        msg = "\nWhat would you like to do?\n1) Walk\n2) Rest\n3) Check Status\n4) Exit Game\n"
         user_input = int(input(msg)) 
 
         if user_input == 1: 
@@ -135,3 +165,14 @@ def run_game():
 
 if __name__ == '__main__':
     run_game()
+
+
+#%% 
+import random
+
+d = {"ammo": 10, "oxen": 2}
+d_list = list(d.keys())
+d_list[0]
+
+random.choice(list(d.keys()))
+
